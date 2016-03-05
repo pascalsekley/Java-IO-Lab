@@ -30,7 +30,7 @@ public class BufferedIOBenchmark {
 
 	static final Logger LOG = Logger.getLogger(BufferedIOBenchmark.class.getName());
 
-        static IData data;
+        static IData data = new MyExperimentData();
 
 	/**
 	 * This enum is used to describe the 4 different strategies for doing the IOs
@@ -87,7 +87,9 @@ public class BufferedIOBenchmark {
 
                 
                 time = Timer.takeTime();
-                data = new MyExperimentData("WRITE", ioStrategy.toString(), numberOfBytesToWrite, blockSize, time);
+                //data = new MyExperimentData("WRITE", ioStrategy.toString(), numberOfBytesToWrite, blockSize, time);
+                data.MyExperiment("WRITE", ioStrategy.toString(), numberOfBytesToWrite, blockSize, time);
+                data.insertData();
                 
                 
 		LOG.log(Level.INFO, "  > Done in {0} ms.", Timer.takeTime());
@@ -139,6 +141,8 @@ public class BufferedIOBenchmark {
 	private void consumeTestData(IOStrategy ioStrategy, int blockSize) {
 		LOG.log(Level.INFO, "Consuming test data ({0}, block size: {1}...", new Object[]{ioStrategy, blockSize});
 		Timer.start();
+                
+                long time;
 
 		InputStream is = null;
 		try {
@@ -166,6 +170,11 @@ public class BufferedIOBenchmark {
 				LOG.log(Level.SEVERE, ex.getMessage(), ex);
 			}
 		}
+                
+                time = Timer.takeTime();
+                data.MyExperiment("READ", ioStrategy.toString(), NUMBER_OF_BYTES_TO_WRITE, blockSize, time);
+                data.insertData();
+                
 		LOG.log(Level.INFO, "  > Done in {0} ms.", Timer.takeTime());
 
 	}
@@ -222,26 +231,26 @@ public class BufferedIOBenchmark {
 		bm.produceTestData(IOStrategy.BlockByBlockWithBufferedStream, NUMBER_OF_BYTES_TO_WRITE, 5);
 		bm.produceTestData(IOStrategy.ByteByByteWithBufferedStream, NUMBER_OF_BYTES_TO_WRITE, 0);
 
-//		LOG.log(Level.INFO, "");
-//		LOG.log(Level.INFO, "*** BENCHMARKING WRITE OPERATIONS (without BufferedStream)", Timer.takeTime());
-//		bm.produceTestData(IOStrategy.BlockByBlockWithoutBufferedStream, NUMBER_OF_BYTES_TO_WRITE, 500);
-//		bm.produceTestData(IOStrategy.BlockByBlockWithoutBufferedStream, NUMBER_OF_BYTES_TO_WRITE, 50);
-//		bm.produceTestData(IOStrategy.BlockByBlockWithoutBufferedStream, NUMBER_OF_BYTES_TO_WRITE, 5);
-//		bm.produceTestData(IOStrategy.ByteByByteWithoutBufferedStream, NUMBER_OF_BYTES_TO_WRITE, 0);
+		LOG.log(Level.INFO, "");
+		LOG.log(Level.INFO, "*** BENCHMARKING WRITE OPERATIONS (without BufferedStream)", Timer.takeTime());
+		bm.produceTestData(IOStrategy.BlockByBlockWithoutBufferedStream, NUMBER_OF_BYTES_TO_WRITE, 500);
+		bm.produceTestData(IOStrategy.BlockByBlockWithoutBufferedStream, NUMBER_OF_BYTES_TO_WRITE, 50);
+		bm.produceTestData(IOStrategy.BlockByBlockWithoutBufferedStream, NUMBER_OF_BYTES_TO_WRITE, 5);
+		bm.produceTestData(IOStrategy.ByteByByteWithoutBufferedStream, NUMBER_OF_BYTES_TO_WRITE, 0);
 
-//		LOG.log(Level.INFO, "");
-//		LOG.log(Level.INFO, "*** BENCHMARKING READ OPERATIONS (with BufferedStream)", Timer.takeTime());
-//		bm.consumeTestData(IOStrategy.BlockByBlockWithBufferedStream, 500);
-//		bm.consumeTestData(IOStrategy.BlockByBlockWithBufferedStream, 50);
-//		bm.consumeTestData(IOStrategy.BlockByBlockWithBufferedStream, 5);
-//		bm.consumeTestData(IOStrategy.ByteByByteWithBufferedStream, 0);
-//		
-//		LOG.log(Level.INFO, "");
-//		LOG.log(Level.INFO, "*** BENCHMARKING READ OPERATIONS (without BufferedStream)", Timer.takeTime());
-//		bm.consumeTestData(IOStrategy.BlockByBlockWithoutBufferedStream, 500);
-//		bm.consumeTestData(IOStrategy.BlockByBlockWithoutBufferedStream, 50);
-//		bm.consumeTestData(IOStrategy.BlockByBlockWithoutBufferedStream, 5);
-//		bm.consumeTestData(IOStrategy.ByteByByteWithoutBufferedStream, 0);
+		LOG.log(Level.INFO, "");
+		LOG.log(Level.INFO, "*** BENCHMARKING READ OPERATIONS (with BufferedStream)", Timer.takeTime());
+		bm.consumeTestData(IOStrategy.BlockByBlockWithBufferedStream, 500);
+		bm.consumeTestData(IOStrategy.BlockByBlockWithBufferedStream, 50);
+		bm.consumeTestData(IOStrategy.BlockByBlockWithBufferedStream, 5);
+		bm.consumeTestData(IOStrategy.ByteByByteWithBufferedStream, 0);
+		
+		LOG.log(Level.INFO, "");
+		LOG.log(Level.INFO, "*** BENCHMARKING READ OPERATIONS (without BufferedStream)", Timer.takeTime());
+		bm.consumeTestData(IOStrategy.BlockByBlockWithoutBufferedStream, 500);
+		bm.consumeTestData(IOStrategy.BlockByBlockWithoutBufferedStream, 50);
+		bm.consumeTestData(IOStrategy.BlockByBlockWithoutBufferedStream, 5);
+		bm.consumeTestData(IOStrategy.ByteByByteWithoutBufferedStream, 0);
                 
                 System.out.println("data.size = "+ data.getData().size()); // Line de debug
                 recorder.record(data);

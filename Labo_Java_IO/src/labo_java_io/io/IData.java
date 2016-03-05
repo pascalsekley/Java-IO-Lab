@@ -12,8 +12,8 @@ import java.util.List;
  * @author Pascal SEKLEY
  */
 public interface IData {
-//   public String getKey();
-//   public Object getObj();
-//   
+
    public List<String> getData();
+   public void MyExperiment(String operation, String strategy, long numberOfBytesToWrite, int blocksize, long duration);
+   public void insertData();
 }
