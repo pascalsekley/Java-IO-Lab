@@ -1,18 +1,16 @@
-package ch.heigvd.res.io;
+package labo_java_io.io;
+
 
 import ch.heigvd.res.io.util.Timer;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import labo_java_io.io.*;
 
 
 /**
@@ -31,6 +29,7 @@ public class BufferedIOBenchmark {
 	static final Logger LOG = Logger.getLogger(BufferedIOBenchmark.class.getName());
 
         static IData data = new MyExperimentData();
+        
 
 	/**
 	 * This enum is used to describe the 4 different strategies for doing the IOs
@@ -54,7 +53,6 @@ public class BufferedIOBenchmark {
 		LOG.log(Level.INFO, "Generating test data ({0}, {1} bytes, block size: {2}...", new Object[]{ioStrategy, numberOfBytesToWrite, blockSize});
 		Timer.start();
                 
-                //IData data;
                 long time;
 
 
@@ -87,7 +85,6 @@ public class BufferedIOBenchmark {
 
                 
                 time = Timer.takeTime();
-                //data = new MyExperimentData("WRITE", ioStrategy.toString(), numberOfBytesToWrite, blockSize, time);
                 data.MyExperiment("WRITE", ioStrategy.toString(), numberOfBytesToWrite, blockSize, time);
                 data.insertData();
                 
@@ -252,7 +249,6 @@ public class BufferedIOBenchmark {
 		bm.consumeTestData(IOStrategy.BlockByBlockWithoutBufferedStream, 5);
 		bm.consumeTestData(IOStrategy.ByteByByteWithoutBufferedStream, 0);
                 
-                System.out.println("data.size = "+ data.getData().size()); // Line de debug
                 recorder.record(data);
                 
                 recorder.close();

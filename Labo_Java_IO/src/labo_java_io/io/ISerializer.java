@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * This class is supposed to contains function that can helps a class to serialize any data
+ * into another format.
  */
 package labo_java_io.io;
 

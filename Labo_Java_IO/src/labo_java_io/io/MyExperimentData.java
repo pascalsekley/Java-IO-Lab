@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * This class helps to keep data from an experiment
  */
 
 package labo_java_io.io;
@@ -21,6 +19,7 @@ public class MyExperimentData implements IData {
    private LinkedList<String> outPutData = new LinkedList();
 
    
+   @Override
    public List<String> getData(){
       return outPutData;
    }
@@ -28,6 +27,7 @@ public class MyExperimentData implements IData {
    
    
    //public MyExperimentData(String operation, String strategy, long numberOfBytesToWrite, int blocksize, long duration){
+   @Override
    public void MyExperiment(String operation, String strategy, long numberOfBytesToWrite, int blocksize, long duration){
       this.operation = operation;
       this.strategy = strategy;
@@ -35,10 +35,10 @@ public class MyExperimentData implements IData {
       this.blocksize = blocksize;
       this.duration = duration;
       
-      //outPutData.add(operation + " , " + strategy + " , " + numberOfBytesToWrite+ " , " + blocksize+ " , " + duration);
-            
+                  
    }
    
+   @Override
    public void insertData(){
       outPutData.add(operation + " , " + strategy + " , " + numberOfBytesToWrite+ " , " + blocksize+ " , " + duration);
    }

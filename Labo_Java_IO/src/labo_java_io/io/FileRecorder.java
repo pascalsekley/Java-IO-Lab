@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * This class helps to record data from an experiment
  */
 
 package labo_java_io.io;
@@ -44,9 +42,9 @@ public class FileRecorder implements IRecorder{
    
    @Override
    public void record(IData data){
-      mySerializer.serializer(data, pw);
+      mySerializer.serialize(data, pw);
       
    }
-  
+   
 
 }
